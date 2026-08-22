@@ -1,0 +1,241 @@
+---
+/**
+ * services.astro — Services Page with Interactive Floating Cards (AstroWind Style)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, CONTACT } from '../lib/config';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services/` },
+  ],
+};
+
+const services = [
+  {
+    id: 'study-visa',
+    title: 'Study Visa & Admissions',
+    badge: 'Higher Education',
+    image: '/assets/services/student-visa.svg',
+    alt: 'Study Visa and Admissions for Germany, UK, Canada, Italy, and Europe',
+    description: 'Complete university shortlisting, application filing, Statement of Purpose (SOP) guidance, and visa file preparation for Germany, UK, Canada, Italy, Australia, and 15+ European destinations.',
+    highlights: [
+      'University and programme shortlisting tailored to your academic profile',
+      'SOP & Motivation Letter drafting and critical embassy audit',
+      'Blocked account (Sperrkonto) and maintenance fund guidance',
+      'APS certificate guidance and document verification',
+      'VFS/Embassy appointment booking and 1-on-1 interview coaching',
+    ],
+    ctaText: 'Explore Study Visas',
+    ctaLink: '/contact/',
+  },
+  {
+    id: 'work-permit',
+    title: 'Germany Ausbildung & Work Permits',
+    badge: 'Vocational Training · Paid',
+    image: '/assets/services/ausbildung-work.svg',
+    alt: 'Germany Ausbildung Vocational Training and Work Permits',
+    description: 'Paid vocational training (Ausbildung) placement and visa support for Pakistani candidates in nursing, IT, hospitality, and technical trades with €600–€1,200/month training allowance.',
+    highlights: [
+      'Ausbildung employer matching with German partner institutions',
+      'German language exam preparation pathways (Goethe B1/B2)',
+      'National Visa (Type D) file compilation and verification',
+      'EU Opportunity Card (Chancenkarte) point calculation and filing',
+      'German standard format CV (Lebenslauf) and cover letter preparation',
+    ],
+    ctaText: 'Inquire About Ausbildung',
+    ctaLink: '/guides/germany-student-visa-ausbildung/',
+  },
+  {
+    id: 'saudi-visa',
+    title: 'Saudi Arabia Work Visa Processing',
+    badge: 'Fixed PKR 15,000 Fee',
+    image: '/assets/services/saudi-visa.svg',
+    alt: 'Saudi Arabia Work Visa Processing at Fixed Fee',
+    description: 'End-to-end processing for Saudi Arabia work visas with a fixed consultancy fee of PKR 15,000. We coordinate all medical, stamping, and protector steps with zero hidden costs.',
+    highlights: [
+      'GAMCA medical appointment and clearance tracking',
+      'Enjaz registration and Saudi Embassy visa stamping',
+      'Musaned domestic worker registration',
+      'Bureau of Emigration (BEOE) protector clearance and stamping',
+      'All government fee receipts provided with complete transparency',
+    ],
+    ctaText: 'Process Saudi Work Visa',
+    ctaLink: '/contact/',
+  },
+  {
+    id: 'visit-visa',
+    title: 'Visit & Tourist Visas',
+    badge: 'Tourism & Business',
+    image: '/assets/services/visit-visa.svg',
+    alt: 'Visit and Tourist Visas for UK, USA, Schengen, and Dubai',
+    description: 'Structured visa applications for UK Standard Visitor, US B1/B2, Schengen Tourist, Dubai, and Malaysia with strong financial and ties documentation.',
+    highlights: [
+      'Financial history review and bank statement structuring',
+      'Customized travel itineraries and verifiable hotel reservations',
+      'Ties to home country evidence compilation',
+      'Compelling cover letters articulating legitimate purpose of travel',
+      'VFS and Embassy submission appointment coordination',
+    ],
+    ctaText: 'Apply For Visit Visa',
+    ctaLink: '/contact/',
+  },
+  {
+    id: 'attestation',
+    title: 'Document Attestation Services',
+    badge: 'Legal & Verification',
+    image: '/assets/services/document-attestation.svg',
+    alt: 'Document Attestation MOFA HEC and Apostille Services',
+    description: 'Fast and reliable document authentication and legalisation services across Pakistani educational and government bodies.',
+    highlights: [
+      'Ministry of Foreign Affairs (MOFA) attestation',
+      'Higher Education Commission (HEC) degree verification',
+      'Apostille certification for Hague convention countries',
+      'Musadaqa and Notary legalisations',
+      'Inter Board Committee of Chairmen (IBCC) equivalence',
+    ],
+    ctaText: 'Get Documents Attested',
+    ctaLink: '/contact/',
+  },
+  {
+    id: 'appointments',
+    title: 'Visa Appointments & Interview Prep',
+    badge: 'Submission Support',
+    image: '/assets/services/visa-appointments.svg',
+    alt: 'Visa Appointments Booking and Interview Coaching',
+    description: 'Continuous monitoring for visa appointment slots across major facilitators and thorough mock interview preparation.',
+    highlights: [
+      'VFS Global, Gerry’s, TLScontact, and BLS appointment monitoring',
+      'Embassy direct portal scheduling',
+      'Customized mock interview questions and response preparation',
+      'Complete pre-submission file audit to prevent rejection',
+    ],
+    ctaText: 'Book Appointment Desk',
+    ctaLink: '/contact/',
+  },
+];
+---
+
+<BaseLayout
+  title="Immigration & Visa Services — SK Immigration Services Rawalpindi"
+  description="Explore our full range of immigration file preparation services: Study Visas, Germany Ausbildung, Saudi Work Visa Processing (PKR 15,000 fixed), Visit Visas, and Document Attestation."
+  canonicalUrl={`${SITE.url}/services/`}
+  jsonLd={breadcrumbSchema}
+>
+  {/* Header Section */}
+  <section class="py-14 md:py-20 bg-slate-50 dark:bg-dark-950 border-b border-slate-200 dark:border-slate-800 not-prose">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-x-2 py-1 px-3.5 rounded-full text-xs font-semibold bg-blue-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300 border border-blue-100 dark:border-slate-700 mb-4">
+        SECP CUIN 0304985 · Transparent File Preparation
+      </div>
+      <h1 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-slate-900 dark:text-white">
+        Immigration &amp; Visa Services
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        Explore our complete range of immigration pathways. Every service is backed by honest guidance, transparent fee schedules, and verified checklists.
+      </p>
+    </div>
+  </section>
+
+  {/* Services Floating Cards Grid */}
+  <section class="section-container not-prose">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+      {services.map((service) => (
+        <div
+          id={service.id}
+          class="group relative bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
+        >
+          {/* Card Visual Header with Image & Floating Badge */}
+          <div class="relative w-full aspect-[16/9] overflow-hidden bg-slate-100 dark:bg-slate-800">
+            <img
+              src={service.image}
+              alt={service.alt}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              width="600"
+              height="338"
+            />
+            {/* Floating Top Badge */}
+            <div class="absolute top-3.5 left-3.5">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/95 dark:bg-dark-950/90 text-slate-900 dark:text-white backdrop-blur-md shadow-sm border border-slate-200/60 dark:border-slate-700/60">
+                {service.badge}
+              </span>
+            </div>
+          </div>
+
+          {/* Card Body */}
+          <div class="p-6 md:p-7 flex-1 flex flex-col">
+            <h2 class="text-xl font-bold font-heading text-slate-900 dark:text-white mb-2.5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              {service.title}
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              {service.description}
+            </p>
+
+            {/* Highlights List */}
+            <div class="mb-6 flex-1 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
+                Key Deliverables:
+              </h3>
+              <ul class="space-y-2 text-xs md:text-sm text-slate-700 dark:text-slate-300">
+                {service.highlights.map((item) => (
+                  <li class="flex items-start gap-2.5">
+                    <span class="text-secondary-500 font-bold text-sm shrink-0">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Card Action Buttons */}
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+              <a
+                href={service.ctaLink}
+                class="btn-primary flex-1 text-center text-xs py-2.5 px-4 shadow-sm"
+              >
+                {service.ctaText}
+              </a>
+              <a
+                href={CONTACT.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-whatsapp text-xs py-2.5 px-4 flex items-center justify-center gap-1.5"
+                aria-label="WhatsApp about this service"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 6.165L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* Trust Guarantee Box */}
+  <section class="section-container not-prose">
+    <div class="max-w-5xl mx-auto bg-gradient-to-r from-primary-900 via-primary-800 to-dark-900 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl">
+      <h2 class="text-2xl md:text-3xl font-bold font-heading mb-3 text-white">
+        Not Sure Which Pathway Fits Your Profile?
+      </h2>
+      <p class="text-slate-300 text-sm md:text-base max-w-xl mx-auto mb-6 leading-relaxed">
+        Book a free 1-on-1 profile evaluation with our advisors in Satellite Town, Rawalpindi. We will assess your academics, language scores, and finances honestly.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/contact/" class="btn-primary bg-white text-primary-900 hover:bg-slate-100 shadow-none font-bold">
+          Book Free Assessment
+        </a>
+        <a
+          href={CONTACT.whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-whatsapp"
+        >
+          WhatsApp {CONTACT.phoneFormatted}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

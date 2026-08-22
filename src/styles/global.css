@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --aw-font-sans: 'Inter', system-ui, sans-serif;
+    --aw-font-serif: var(--aw-font-sans);
+    --aw-font-heading: 'Plus Jakarta Sans', var(--aw-font-sans);
+
+    --aw-color-primary: rgb(37 99 235);
+    --aw-color-secondary: rgb(16 185 129);
+    --aw-color-accent: rgb(245 158 11);
+    --aw-color-text-heading: rgb(15 23 42);
+    --aw-color-text-default: rgb(51 65 85);
+    --aw-color-text-muted: rgb(100 116 139);
+    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-bg-page-dark: rgb(3 7 18);
+  }
+
+  .dark {
+    --aw-color-text-heading: rgb(248 250 252);
+    --aw-color-text-default: rgb(203 213 225);
+    --aw-color-text-muted: rgb(148 163 184);
+    --aw-color-bg-page: rgb(3 7 18);
+  }
+
+  html {
+    font-family: var(--aw-font-sans);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-700 tracking-tight dark:bg-dark-950 dark:text-slate-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--aw-font-heading);
+    @apply font-bold tracking-tight text-slate-900 dark:text-slate-100;
+  }
+}
+
+@layer components {
+  /* AstroWind style buttons */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full shadow-md text-sm font-semibold text-center leading-snug transition duration-200 ease-in cursor-pointer hover:shadow-none px-6 py-3;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 hover:bg-primary-700 text-white dark:bg-primary-600 dark:hover:bg-primary-700;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary-600 hover:bg-secondary-700 text-white dark:bg-secondary-600 dark:hover:bg-secondary-700;
+  }
+
+  .btn-tertiary {
+    @apply btn bg-transparent hover:bg-slate-100 text-slate-700 border border-slate-300 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-800;
+  }
+
+  .btn-whatsapp {
+    @apply btn bg-[#25D366] hover:bg-[#1ebe5d] text-white;
+  }
+
+  /* AstroWind Section wrappers */
+  .section-container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 py-12 md:py-20;
+  }
+
+  .intersect-once {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

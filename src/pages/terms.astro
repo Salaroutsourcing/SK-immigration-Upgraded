@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, CONTACT, BUSINESS } from '../lib/config';
+---
+
+<BaseLayout
+  title="Terms of Service — SK Immigration Services"
+  description="Terms of Service for SK Immigration Services (SMC-Private) Limited. No visa guarantees policy, fee structure, limitation of liability, and service conditions."
+  canonicalUrl={`${SITE.url}/terms/`}
+>
+  <section class="bg-navy-900 py-12">
+    <div class="container-sk text-center">
+      <h1 class="font-display text-3xl font-bold text-white">Terms of Service</h1>
+      <p class="mt-2 text-slate-400 text-sm">Last updated: August 2026</p>
+    </div>
+  </section>
+
+  <section class="section-pad bg-white dark:bg-navy-900">
+    <div class="container-sk">
+      <div class="max-w-3xl mx-auto content-prose">
+        <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 p-5 mb-8">
+          <p class="text-sm text-amber-800 dark:text-amber-300 font-medium">
+            ⚠️ <strong>Important:</strong> SK Immigration Services does not guarantee visa outcomes. All visa decisions are made exclusively by embassies, consulates, VFS Global, and immigration authorities. Please read these terms carefully before engaging our services.
+          </p>
+        </div>
+
+        <h2>1. About the Company</h2>
+        <p>
+          These Terms of Service govern the use of services provided by <strong>SK Immigration Services (SMC-Private) Limited</strong>
+          (CUIN {BUSINESS.cuin}), incorporated in Pakistan and operating from Office No. 10, Alfazal Plaza 64C, Satellite Town, Rawalpindi, Punjab, Pakistan.
+        </p>
+
+        <h2>2. Nature of Services</h2>
+        <p>SK Immigration Services provides:</p>
+        <ul>
+          <li>Immigration file preparation and documentation assistance</li>
+          <li>Educational guidance on visa categories and eligibility requirements</li>
+          <li>University and employer admission assistance</li>
+          <li>Document attestation coordination</li>
+          <li>Visa appointment booking assistance</li>
+        </ul>
+        <p>
+          We are an <strong>immigration consultancy</strong>, not a legal firm. We do not provide legal representation in immigration courts or tribunals.
+        </p>
+
+        <h2>3. No Visa Guarantee Policy</h2>
+        <p>
+          SK Immigration Services explicitly does <strong>not</strong> guarantee, promise, or imply any specific visa outcome.
+          Final decisions on all visa and immigration applications rest solely with the relevant embassy, consulate, high commission,
+          immigration authority, or government body of the destination country.
+        </p>
+        <p>
+          Any agent, consultant, or company that guarantees a visa approval is misrepresenting the immigration process.
+          We strongly advise clients to be wary of such claims from any service provider.
+        </p>
+
+        <h2>4. Fee Policy</h2>
+        <ul>
+          <li>All consultancy fees are communicated in writing before any payment is made</li>
+          <li>Government fees (BEOE, Enjaz, VFS, embassy fees, medical) are paid directly to the respective authority and are separate from our consultancy fee</li>
+          <li>Our consultancy fee is non-refundable once file preparation has commenced, unless we are unable to begin the service</li>
+          <li>A visa refusal does not automatically entitle the client to a fee refund, as our service is file preparation — not visa approval</li>
+        </ul>
+
+        <h2>5. Client Responsibilities</h2>
+        <p>Clients must:</p>
+        <ul>
+          <li>Provide accurate, complete, and truthful information and documents</li>
+          <li>Respond promptly to requests for additional documents or information</li>
+          <li>Attend all scheduled appointments on time</li>
+          <li>Not misrepresent their profile, finances, or intentions to any embassy or authority</li>
+        </ul>
+        <p>
+          Providing false documents or information is illegal and may result in permanent visa bans. SK Immigration Services will immediately cease services if fraud or misrepresentation is discovered.
+        </p>
+
+        <h2>6. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by Pakistani law, SK Immigration Services shall not be liable for:
+        </p>
+        <ul>
+          <li>Visa refusals by any embassy or immigration authority</li>
+          <li>Changes in embassy requirements, immigration rules, or policies</li>
+          <li>Delays caused by government processing times</li>
+          <li>Any indirect, consequential, or special losses arising from our services</li>
+        </ul>
+
+        <h2>7. Governing Law</h2>
+        <p>
+          These Terms are governed by the laws of the Islamic Republic of Pakistan.
+          Any disputes shall be subject to the jurisdiction of the courts of Rawalpindi, Punjab, Pakistan.
+        </p>
+
+        <h2>8. Website Content Disclaimer</h2>
+        <p>
+          The guides and blog posts on this website are for <strong>educational purposes only</strong>.
+          Embassy requirements, fees, and procedures change frequently. Always verify current requirements from official embassy websites.
+          SK Immigration Services is not liable for decisions made based solely on website content without consulting our advisors.
+        </p>
+
+        <h2>9. Contact</h2>
+        <p>
+          For any questions regarding these terms: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a><br />
+          WhatsApp: <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneFormatted}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

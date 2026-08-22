@@ -1,0 +1,69 @@
+---
+/**
+ * blog/index.astro — Blog & Insights (AstroWind Style)
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../../lib/config';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) =>
+  b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(date);
+}
+---
+
+<BaseLayout
+  title="Insights & Articles — SK Immigration Services"
+  description="Educational articles on study visa refusals, IELTS benchmarks, blocked account procedures, and immigration updates for Pakistani applicants."
+  canonicalUrl={`${SITE.url}/blog/`}
+>
+  <section class="py-12 md:py-16 bg-slate-50 dark:bg-dark-950 border-b border-slate-200 dark:border-slate-800 not-prose">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <p class="text-base text-primary-600 dark:text-blue-400 font-semibold tracking-wide uppercase mb-2">
+        Educational Articles
+      </p>
+      <h1 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-slate-900 dark:text-white">
+        Immigration Insights &amp; Advice
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+        Practical breakdowns written by our advisory team to help Pakistani applicants avoid common file errors.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedPosts.map((post) => (
+        <article class="flex flex-col bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary-500/40 transition overflow-hidden">
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.data.tags.slice(0, 2).map((tag) => (
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2 class="text-xl font-bold font-heading mb-2 text-slate-900 dark:text-white hover:text-primary-600 transition">
+              <a href={`/blog/${post.slug}/`}>
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 flex-1">
+              {post.data.description}
+            </p>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+              <time datetime={post.data.publishDate.toISOString()}>{formatDate(post.data.publishDate)}</time>
+              <a href={`/blog/${post.slug}/`} class="font-semibold text-primary-600 dark:text-primary-400 hover:underline">
+                Read Article →
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

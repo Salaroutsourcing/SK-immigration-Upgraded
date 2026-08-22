@@ -1,0 +1,171 @@
+---
+/**
+ * contact.astro — Contact Page (AstroWind Style)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, CONTACT, BUSINESS } from '../lib/config';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: `${SITE.url}/contact/` },
+  ],
+};
+---
+
+<BaseLayout
+  title="Contact SK Immigration Services — Rawalpindi Office"
+  description="Contact SK Immigration Services in Satellite Town, Rawalpindi. WhatsApp +92 304 5999859, visit our office, or book an online consultation."
+  canonicalUrl={`${SITE.url}/contact/`}
+  jsonLd={breadcrumbSchema}
+>
+  <section class="py-12 md:py-16 bg-slate-50 dark:bg-dark-950 border-b border-slate-200 dark:border-slate-800 not-prose">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-3xl md:text-5xl font-bold font-heading mb-4 text-slate-900 dark:text-white">
+        Contact Our Immigration Desk
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+        Have questions about study visas, Ausbildung, or Saudi work processing? Reach out to our team in Rawalpindi.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="grid lg:grid-cols-12 gap-12 items-start">
+      
+      {/* Contact Form */}
+      <div class="lg:col-span-7 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <h2 class="text-2xl font-bold font-heading mb-2 text-slate-900 dark:text-white">Send Us an Inquiry</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">
+          Fill in your details for a free assessment. We typically reply within 24 hours.
+        </p>
+
+        <form action={`mailto:${CONTACT.email}`} method="POST" enctype="text/plain" class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-xs font-semibold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Muhammad Ahmed"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-dark-950 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-xs font-semibold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
+                Phone / WhatsApp *
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="+92 3XX XXXXXXX"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-dark-950 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-semibold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@domain.com"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-dark-950 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label for="service" class="block text-xs font-semibold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
+              Service of Interest *
+            </label>
+            <select
+              id="service"
+              name="service"
+              required
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-dark-950 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none"
+            >
+              <option value="">— Select Service —</option>
+              <option value="germany-study">Germany Study Visa &amp; Ausbildung</option>
+              <option value="uk-study">UK Student Visa</option>
+              <option value="canada-study">Canada Study Visa</option>
+              <option value="saudi-work">Saudi Arabia Work Visa (PKR 15k Fixed)</option>
+              <option value="visit-visa">Visit / Tourist Visa</option>
+              <option value="attestation">Document Attestation (MOFA/HEC)</option>
+              <option value="other">Other Inquiry</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-xs font-semibold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
+              Message / Qualifications *
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="Your academic background, IELTS/German score, and preferred destination..."
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-dark-950 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none resize-none"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-3 mt-2">
+            Submit Assessment Request
+          </button>
+        </form>
+      </div>
+
+      {/* Info Column */}
+      <div class="lg:col-span-5 space-y-6">
+        {/* WhatsApp Card */}
+        <div class="p-6 bg-[#25D366]/10 border border-[#25D366]/30 rounded-3xl">
+          <h3 class="text-lg font-bold font-heading mb-2 text-slate-900 dark:text-white">Instant WhatsApp Support</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Message directly on our official WhatsApp desk for quick answers on requirements and eligibility.
+          </p>
+          <a
+            href={CONTACT.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-whatsapp w-full text-center py-2.5 text-sm"
+          >
+            WhatsApp {CONTACT.phoneFormatted}
+          </a>
+        </div>
+
+        {/* Office Details */}
+        <div class="p-6 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <h3 class="text-lg font-bold font-heading mb-4 text-slate-900 dark:text-white">Head Office</h3>
+          <div class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+            <p><strong>Address:</strong> {CONTACT.address.full}</p>
+            <p><strong>Hours:</strong> Monday – Saturday: 10:00 AM – 7:00 PM</p>
+            <p><strong>Email:</strong> {CONTACT.email}</p>
+            <p><strong>SECP CUIN:</strong> {BUSINESS.cuin}</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <a
+              href={BUSINESS.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-xs font-semibold text-primary-600 dark:text-primary-400 hover:underline"
+            >
+              Open Location in Google Maps ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

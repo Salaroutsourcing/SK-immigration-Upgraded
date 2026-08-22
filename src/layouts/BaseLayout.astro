@@ -1,0 +1,225 @@
+---
+/**
+ * BaseLayout.astro — Master layout for all SK Immigration pages
+ * Handles: <head>, meta tags, OG, Twitter, JSON-LD, GTM, fonts, dark mode
+ */
+import '../styles/global.css';
+import { SITE, CONTACT, BUSINESS, SOCIAL, ANALYTICS } from '../lib/config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonicalUrl?: string;
+  jsonLd?: object | object[];
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  ogImage = SITE.ogImage,
+  ogType = 'website',
+  canonicalUrl,
+  jsonLd,
+  noIndex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} | SK Immigration Services` : `SK Immigration Services | SK Consultant Rawalpindi — Study Visa & Work Permit`;
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE.url).href;
+
+// Build JSON-LD array — always include Organization + WebSite schemas
+const baseOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'ProfessionalService', 'LocalBusiness'],
+  '@id': `${SITE.url}/#organization`,
+  name: SITE.name,
+  alternateName: ['SK Immigration', 'SK Consultant', 'SK Immigration Consultant', 'SK Visa Consultant', 'SK Consultant Rawalpindi'],
+  legalName: SITE.legalName,
+  url: SITE.url,
+  logo: new URL(SITE.logo, SITE.url).href,
+  image: [new URL(SITE.ogImage, SITE.url).href, new URL(SITE.logo, SITE.url).href],
+  email: CONTACT.email,
+  telephone: CONTACT.phone,
+  priceRange: '$$',
+  description: SITE.description,
+  areaServed: ['PK', 'DE', 'GB', 'CA', 'IT', 'AU', 'FR', 'HU', 'PL', 'RO', 'ES', 'MY', 'TR', 'AE', 'IE', 'NL', 'CY', 'MT', 'SK', 'CZ', 'PT', 'SA', 'Rawalpindi', 'Islamabad', 'Lahore', 'Karachi'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: CONTACT.address.street,
+    addressLocality: CONTACT.address.city,
+    addressRegion: CONTACT.address.region,
+    postalCode: CONTACT.address.postalCode,
+    addressCountry: CONTACT.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: CONTACT.geo.latitude, longitude: CONTACT.geo.longitude },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '10:00',
+    closes: '19:00',
+  },
+  sameAs: [
+    SOCIAL.instagram, SOCIAL.tiktok, SOCIAL.facebook, SOCIAL.linkedin, SOCIAL.youtube,
+    BUSINESS.googleMapsUrl, BUSINESS.secpVerifyUrl,
+  ],
+  identifier: { '@type': 'PropertyValue', name: 'SECP CUIN', value: BUSINESS.cuin },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: CONTACT.phone,
+    contactType: 'customer service',
+    availableLanguage: ['English', 'Urdu'],
+    areaServed: 'PK',
+  },
+  availableLanguage: ['English', 'Urdu'],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  name: SITE.name,
+  alternateName: ['SK Consultant', 'SK Immigration'],
+  url: SITE.url,
+  inLanguage: ['en', 'ur'],
+  publisher: { '@id': `${SITE.url}/#organization` },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE.url}/guides/?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const allSchemas = [baseOrgSchema, websiteSchema, ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [])];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    {/* Google Consent Mode v2 — must be first */}
+    {ANALYTICS.gtmId && (
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        // Default deny for EEA/UK/CH
+        gtag('consent', 'default', {
+          ad_storage: 'denied', ad_user_data: 'denied',
+          ad_personalization: 'denied', analytics_storage: 'denied',
+          wait_for_update: 500,
+          region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']
+        });
+        // Default grant for rest of world
+        gtag('consent', 'default', {
+          ad_storage: 'granted', ad_user_data: 'granted',
+          ad_personalization: 'granted', analytics_storage: 'granted'
+        });
+      </script>
+    )}
+
+    {/* Google Tag Manager */}
+    {ANALYTICS.gtmId && (
+      <script define:vars={{ gtmId: ANALYTICS.gtmId }}>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+      </script>
+    )}
+
+    {/* AdSense account verification */}
+    {ANALYTICS.adsenseId && (
+      <meta name="google-adsense-account" content={ANALYTICS.adsenseId} />
+    )}
+
+    {/* SEO Core */}
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={SITE.url + '/'} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="author" content={SITE.name} />
+    <meta name="keywords" content="SK Immigration Services, SK Consultant, SK Immigration Consultant, study visa Pakistan, work permit Pakistan, visit visa Pakistan, Rawalpindi visa consultant, Germany Ausbildung Pakistan, Saudi work visa Pakistan" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="en_US" />
+
+    {/* Twitter / X Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {/* Favicon & Theme */}
+    <link rel="icon" href="/assets/logo.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="/assets/logo.jpg" />
+    <meta name="theme-color" content="#0f172a" />
+
+    {/* Fonts — preconnect for performance */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,700&display=swap" />
+
+    {/* JSON-LD Structured Data */}
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    {/* Dark mode — runs before paint to avoid flash */}
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <body class="bg-white dark:bg-navy-900 transition-colors duration-200">
+    {/* GTM noscript fallback */}
+    {ANALYTICS.gtmId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.gtmId}`}
+          height="0" width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
+
+    <Header />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+
+    {/* Skip to content — accessibility */}
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-lg focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white"
+    >
+      Skip to main content
+    </a>
+  </body>
+</html>

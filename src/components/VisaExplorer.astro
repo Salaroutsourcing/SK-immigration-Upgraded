@@ -1,0 +1,250 @@
+---
+/**
+ * VisaExplorer.astro — Interactive Visa & Eligibility Explorer
+ * High-utility, engaging client-side widget. Boosts time-on-page and generates instant WhatsApp leads.
+ */
+import { CONTACT } from '../lib/config';
+
+const destinations = [
+  {
+    id: 'germany-ausbildung',
+    name: 'Germany Ausbildung',
+    flag: '🇩🇪',
+    category: 'Vocational Work',
+    tuition: '€0 (Fully Sponsored)',
+    monthlyStipend: '€600 – €1,200 / month',
+    languageReq: 'German B1 / B2 (Goethe / ÖSD)',
+    blockedAccount: 'Usually Not Required (or €0 with salary)',
+    prTimeline: '2 Years after completion',
+    summary: 'Paid 2-3 year vocational training in nursing, IT, or technical trades with zero tuition and high PR prospects.',
+    guideUrl: '/guides/germany-student-visa-ausbildung/',
+    whatsappMsg: 'Hi SK Immigration, I want an assessment for Germany Ausbildung vocational training.',
+  },
+  {
+    id: 'germany-study',
+    name: 'Germany Public University',
+    flag: '🇩🇪',
+    category: 'Bachelor & Master',
+    tuition: '€0 to €3,000 / year (Public)',
+    monthlyStipend: 'Part-time work permitted (120 days/yr)',
+    languageReq: 'IELTS 6.5+ or German B2/C1',
+    blockedAccount: '€11,904 / year (Sperrkonto)',
+    prTimeline: '2 Years after graduation job',
+    summary: 'World-class degree from top German public universities with 18-month post-study work visa.',
+    guideUrl: '/guides/germany-student-visa-ausbildung/',
+    whatsappMsg: 'Hi SK Immigration, I want an assessment for Germany Public University study visa.',
+  },
+  {
+    id: 'uk-study',
+    name: 'UK Student Route',
+    flag: '🇬🇧',
+    category: 'Higher Education',
+    tuition: '£12,000 – £22,000 / year',
+    monthlyStipend: '20 hrs/week part-time work',
+    languageReq: 'IELTS 6.0 – 6.5 or MOI',
+    blockedAccount: 'CAS + 28 Days Living Maintenance',
+    prTimeline: 'Graduate Visa (2 yrs) -> Skilled Worker',
+    summary: 'Fast-track 1-year Masters or 3-year Bachelors with 2-year Graduate Route post-study work visa.',
+    guideUrl: '/services/#study-visa',
+    whatsappMsg: 'Hi SK Immigration, I want guidance for UK Student Route admissions and CAS.',
+  },
+  {
+    id: 'saudi-work',
+    name: 'Saudi Arabia Work Visa',
+    flag: '🇸🇦',
+    category: 'Employment Visa',
+    tuition: 'N/A',
+    monthlyStipend: 'Tax-Free Salary in SAR',
+    languageReq: 'Basic English / Arabic (optional)',
+    blockedAccount: 'Fixed Consultancy: PKR 15,000',
+    prTimeline: 'Iqama Renewable Work Contract',
+    summary: 'Complete processing: GAMCA Medical, Enjaz, Visa Stamping, Musaned, and BEOE Protector Clearance at fixed PKR 15k.',
+    guideUrl: '/services/#saudi-visa',
+    whatsappMsg: 'Hi SK Immigration, I want to process my Saudi Arabia work visa with the PKR 15,000 fixed package.',
+  },
+  {
+    id: 'canada-study',
+    name: 'Canada Study Permit',
+    flag: '🇨🇦',
+    category: 'Higher Education',
+    tuition: 'CAD 16,000 – 28,000 / year',
+    monthlyStipend: '24 hrs/week part-time work',
+    languageReq: 'IELTS 6.0+ (SDS Stream)',
+    blockedAccount: 'GIC (CAD 20,635) + 1 Yr Tuition',
+    prTimeline: 'PGWP (up to 3 yrs) -> Express Entry PR',
+    summary: 'Direct route to Canadian permanent residency via designated learning institutions and post-graduation work permits.',
+    guideUrl: '/services/#study-visa',
+    whatsappMsg: 'Hi SK Immigration, I want an assessment for Canada Study Permit and GIC file preparation.',
+  },
+  {
+    id: 'italy-study',
+    name: 'Italy Public University',
+    flag: '🇮🇹',
+    category: 'Bachelor & Master',
+    tuition: '€500 – €3,000 / yr (Regional Scholarships)',
+    monthlyStipend: 'Up to €7,000/yr regional grants',
+    languageReq: 'IELTS 6.0+ or English Certificate',
+    blockedAccount: '€6,000 Embassy Financial Proof',
+    prTimeline: '1-Year Permesso di Soggiorno job seeker',
+    summary: 'Affordable European higher education with generous DSU regional scholarship opportunities for Pakistani students.',
+    guideUrl: '/services/#study-visa',
+    whatsappMsg: 'Hi SK Immigration, I want an assessment for Italy University admissions and scholarships.',
+  },
+];
+---
+
+<div class="not-prose my-8 rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-6 md:p-8 shadow-xl">
+  
+  {/* Explorer Header */}
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+    <div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300 mb-2">
+        <span class="w-2 h-2 rounded-full bg-primary-600 animate-pulse"></span>
+        Interactive Visa &amp; Cost Explorer
+      </div>
+      <h3 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">
+        Find Your Pathway Requirements
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        Select a destination to compare real costs, language criteria, and embassy financial rules.
+      </p>
+    </div>
+    <div class="text-xs text-slate-400 dark:text-slate-500 font-medium">
+      Updated for 2025–2026 Rules
+    </div>
+  </div>
+
+  {/* Destination Tab Pills */}
+  <div class="flex flex-wrap gap-2.5 pt-6 pb-6 overflow-x-auto" id="dest-tabs" role="tablist">
+    {destinations.map((d, index) => (
+      <button
+        type="button"
+        role="tab"
+        aria-selected={index === 0 ? "true" : "false"}
+        data-target={d.id}
+        class={`dest-tab-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs md:text-sm font-semibold transition duration-200 border ${
+          index === 0
+            ? 'bg-primary-600 text-white border-primary-600 shadow-md shadow-primary-500/20 active-tab'
+            : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700/80'
+        }`}
+      >
+        <span>{d.flag}</span>
+        <span>{d.name}</span>
+      </button>
+    ))}
+  </div>
+
+  {/* Destination Detail Cards */}
+  <div id="dest-panels">
+    {destinations.map((d, index) => (
+      <div
+        id={`panel-${d.id}`}
+        role="tabpanel"
+        class={`dest-panel transition-all duration-300 ${index === 0 ? 'block' : 'hidden'}`}
+      >
+        <div class="grid lg:grid-cols-12 gap-6 bg-slate-50/70 dark:bg-dark-950/60 p-6 md:p-7 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+          
+          {/* Left Column: Quick Stats Matrix */}
+          <div class="lg:col-span-8 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-blue-400">
+                {d.category}
+              </span>
+              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Verified Embassy Data
+              </span>
+            </div>
+
+            <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+              {d.summary}
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-3 pt-2">
+              <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                <span class="text-xs text-slate-400 block mb-0.5 font-medium">💰 Tuition / Cost</span>
+                <span class="text-sm font-bold text-slate-900 dark:text-white">{d.tuition}</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                <span class="text-xs text-slate-400 block mb-0.5 font-medium">🗣️ Language Requirement</span>
+                <span class="text-sm font-bold text-slate-900 dark:text-white">{d.languageReq}</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                <span class="text-xs text-slate-400 block mb-0.5 font-medium">🏦 Financial / Blocked Fund</span>
+                <span class="text-sm font-bold text-slate-900 dark:text-white">{d.blockedAccount}</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                <span class="text-xs text-slate-400 block mb-0.5 font-medium">🎯 Settlement &amp; PR Route</span>
+                <span class="text-sm font-bold text-slate-900 dark:text-white">{d.prTimeline}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Direct Next Steps CTA */}
+          <div class="lg:col-span-4 flex flex-col justify-between p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+            <div>
+              <h4 class="text-sm font-bold font-heading text-slate-900 dark:text-white mb-2">
+                Evaluate Your Profile
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+                Walk into our Rawalpindi office or send your qualifications for an honest eligibility review.
+              </p>
+            </div>
+
+            <div class="space-y-2.5">
+              <a
+                href={`https://wa.me/923045999859?text=${encodeURIComponent(d.whatsappMsg)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-whatsapp w-full text-center text-xs py-2.5 flex items-center justify-center gap-1.5"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 6.165L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Ask on WhatsApp
+              </a>
+              <a
+                href={d.guideUrl}
+                class="btn-tertiary w-full text-center text-xs py-2 block"
+              >
+                Read Complete Guide →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    ))}
+  </div>
+
+</div>
+
+<script>
+  const tabButtons = document.querySelectorAll('.dest-tab-btn');
+  const panels = document.querySelectorAll('.dest-panel');
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+
+      // Update button styles
+      tabButtons.forEach((b) => {
+        b.classList.remove('bg-primary-600', 'text-white', 'border-primary-600', 'shadow-md', 'shadow-primary-500/20', 'active-tab');
+        b.classList.add('bg-slate-50', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-700');
+        b.setAttribute('aria-selected', 'false');
+      });
+
+      btn.classList.remove('bg-slate-50', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-700');
+      btn.classList.add('bg-primary-600', 'text-white', 'border-primary-600', 'shadow-md', 'shadow-primary-500/20', 'active-tab');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Show target panel
+      panels.forEach((p) => {
+        if (p.id === `panel-${targetId}`) {
+          p.classList.remove('hidden');
+          p.classList.add('block');
+        } else {
+          p.classList.remove('block');
+          p.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

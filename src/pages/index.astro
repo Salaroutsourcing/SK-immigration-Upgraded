@@ -1,0 +1,482 @@
+---
+/**
+ * index.astro — SK Immigration Services Homepage
+ * 2026 Executive Architecture: High-Trust Direct Navigation Hubs & Institutional Authority
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { SITE, CONTACT, BUSINESS, SOCIAL } from '../lib/config';
+
+// Homepage FAQ Schema for rich snippets & AI Overviews
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Who is SK Consultant / SK Immigration Services?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SK Immigration Services (also searched as SK Consultant) is the public brand of SK Immigration Services (SMC-Private) Limited, CUIN 0304985, based in Satellite Town, Rawalpindi. Website: https://immigration.salaroutsourcing.com. Official WhatsApp: +92 304 5999859.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the official SK Immigration phone number?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The official phone and WhatsApp number is +92 304 5999859. Match any Google Business listing to this number before you call or pay any fees.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does SK Immigration Services guarantee visas?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. SK Immigration Services does not sell visa guarantees and never will. Embassies, VFS Global centres, and immigration authorities make every final visa decision. We prepare the strongest possible file — the outcome remains with the embassy.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What services does SK Immigration offer from Pakistan?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SK Immigration prepares: Germany study visa & Ausbildung, UK student visa, Canada study permit, Italy & Australia study visas, Saudi Arabia work visa processing (fixed fee PKR 15,000), UAE/Schengen visit visas, document attestation (MOFA, Apostille, Musadaqa, QVP), and visa appointment booking.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is SK Immigration Services SECP registered?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. SK Immigration Services (SMC-Private) Limited is registered with the Securities and Exchange Commission of Pakistan (SECP), CUIN 0304985. To verify: go to leap.secp.gov.pk, click "Verify Company Information", and search by company name "SK Immigration Services".',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does SK Immigration charge for Saudi work visa processing?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SK Immigration charges a fixed fee of PKR 15,000 for complete Saudi Arabia work visa processing including: medical clearance, Enjaz registration, visa stamping, Musaned registration, and protector/BEOE departure formalities. No hidden charges.',
+      },
+    },
+  ],
+};
+
+const navigationHubs = [
+  {
+    title: 'Study Visa & Global Admissions',
+    badge: 'Higher Education',
+    image: '/assets/hubs/study-visa.svg',
+    alt: 'Study Visa Admissions for Germany, UK, Canada, Italy, and Europe',
+    description: 'Direct file preparation for Germany (€0 tuition public universities), UK CAS student route, Canada GIC study permits, Italy DSU scholarships, and Australia.',
+    tags: ['Germany Blocked Account', 'UK CAS', 'Canada SDS', 'Italy DSU'],
+    href: '/services/#study-visa',
+  },
+  {
+    title: 'Germany Ausbildung & Work Permits',
+    badge: 'Paid Vocational Training',
+    image: '/assets/hubs/ausbildung-work.svg',
+    alt: 'Germany Ausbildung Vocational Training and Work Permits',
+    description: 'Guaranteed-stipend (€600–€1,200/mo) dual vocational apprenticeships in nursing, IT, and engineering trades, plus EU Opportunity Card (Chancenkarte).',
+    tags: ['€0 Tuition', 'Paid Stipend', 'Goethe B1/B2', 'PR Route'],
+    href: '/guides/germany-student-visa-ausbildung/',
+  },
+  {
+    title: 'Document Attestation & Legalization',
+    badge: 'MOFA · HEC · Apostille',
+    image: '/assets/hubs/attestation-legal.svg',
+    alt: 'Document Attestation, MOFA, Apostille, Musadaqa, and QVP Legalization',
+    description: 'Fast-track verification and legal stamp coordination: MOFA, HEC degree verification, Apostille certification, Musadaqa (Saudi Culture), and QVP equivalence.',
+    tags: ['MOFA Pakistan', 'Musadaqa', 'Apostille', 'IBCC / QVP'],
+    href: '/services/#attestation',
+  },
+  {
+    title: 'Saudi Arabia Work Visa Processing',
+    badge: 'Fixed Fee: PKR 15,000',
+    image: '/assets/hubs/saudi-visa.svg',
+    alt: 'Saudi Arabia Work Visa Processing at Fixed Fee',
+    description: 'Complete transparency: GAMCA medical tracking, Enjaz registration, visa stamping, Musaned contract registration, and BEOE Protector clearance.',
+    tags: ['Fixed PKR 15k', 'GAMCA Medical', 'Enjaz Stamping', 'BEOE Protector'],
+    href: '/services/#saudi-visa',
+  },
+  {
+    title: 'Visa Appointments Desk',
+    badge: 'Embassy & Facilitator Support',
+    image: '/assets/hubs/appointments.svg',
+    alt: 'Visa Appointments and Interview Coaching',
+    description: 'Slot monitoring and booking support for VFS Global, Gerry’s FMC, TLScontact, BLS International, and embassy direct portals with 1-on-1 mock interview preparation.',
+    tags: ['VFS Global', 'Gerry’s FMC', 'TLScontact', 'Mock Interview'],
+    href: '/services/#appointments',
+  },
+  {
+    title: 'Guides & Intelligence Knowledge Base',
+    badge: 'Verified Embassies Data',
+    image: '/assets/hubs/guides-insights.svg',
+    alt: 'Visa Rejection Prevention and Country Guides',
+    description: 'Deep, actionable blueprints on avoiding student visa rejections, blocked account procedures, Statement of Purpose drafting, and post-study work regulations.',
+    tags: ['Rejection Prevention', 'SOP Guidance', 'Embassy Checklists', 'Cost Analysis'],
+    href: '/guides/',
+  },
+];
+---
+
+<BaseLayout jsonLd={faqSchema}>
+  {/* ═══════════════════════════════════════════════════════════
+       HERO SECTION — Institutional Authority & Clarity
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="relative md:-mt-[76px] not-prose bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-dark-950 dark:via-slate-950 dark:to-dark-950">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="pt-0 md:pt-[76px]"></div>
+      <div class="py-14 md:py-24 text-center">
+        
+        {/* SECP Verification Badge */}
+        <div class="inline-flex items-center gap-x-2 py-1.5 px-4 rounded-full text-xs font-semibold bg-blue-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300 border border-blue-100 dark:border-slate-700 mb-6 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          SK Immigration Services (SMC-Private) Limited · SECP CUIN {BUSINESS.cuin}
+        </div>
+
+        {/* Hero Title */}
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6 font-heading text-slate-900 dark:text-white max-w-4xl mx-auto">
+          Pakistan's SECP-Registered Immigration &amp; Visa Advisory
+        </h1>
+
+        {/* Subtitle */}
+        <div class="max-w-3xl mx-auto">
+          <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+            Professional file preparation, university admissions, and visa appointments for Germany, UK, Canada, and Saudi Arabia.
+            <span class="font-semibold text-slate-800 dark:text-slate-200"> Transparent fee schedules, physical office in Rawalpindi, and 100% honest guidance.</span>
+          </p>
+
+          {/* Action Buttons */}
+          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4">
+            <div class="flex w-full sm:w-auto">
+              <a
+                class="btn-primary w-full sm:mb-0 shadow-md hover:shadow-lg transition-all"
+                href="/contact/"
+              >
+                Book Free Consultation
+              </a>
+            </div>
+            <div class="flex w-full sm:w-auto">
+              <a
+                class="btn-whatsapp w-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+                href={CONTACT.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 6.165L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp {CONTACT.phoneFormatted}
+              </a>
+            </div>
+          </div>
+
+          {/* Trust Pillars */}
+          <div class="mt-10 flex flex-wrap justify-center items-center gap-6 md:gap-8 text-sm text-slate-600 dark:text-slate-400">
+            <span class="inline-flex items-center gap-2 font-medium">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              SECP Verified (CUIN 0304985)
+            </span>
+            <span class="inline-flex items-center gap-2 font-medium">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Satellite Town Rawalpindi Office
+            </span>
+            <span class="inline-flex items-center gap-2 font-medium">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              No Visa Guarantees Policy
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ═══════════════════════════════════════════════════════════
+       CORPORATE ETHICS & INTEGRITY BANNER
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="bg-blue-50/80 dark:bg-slate-900 border-y border-blue-100 dark:border-slate-800 not-prose">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-5 text-sm md:text-base text-center font-medium">
+      <span class="font-bold text-primary-800 dark:text-blue-300">Our Honest Standard:</span>
+      <span class="text-slate-700 dark:text-slate-300">
+        {' '}We compile genuine, verifiable files strictly aligned with official consulate standards. Embassies decide every visa outcome — we never make misleading promises.
+      </span>
+    </div>
+  </section>
+
+  {/* ═══════════════════════════════════════════════════════════
+       EXECUTIVE DIRECT NAVIGATION HUBS (Square Floating Cards)
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="section-container not-prose" id="hubs">
+    <div class="md:mx-auto text-center max-w-3xl mb-12">
+      <p class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-blue-400 mb-2">
+        Direct Access Portals
+      </p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 font-heading text-slate-900 dark:text-white">
+        Where Would You Like To Go?
+      </h2>
+      <p class="text-base md:text-lg text-slate-600 dark:text-slate-400">
+        Choose your primary pathway below for step-by-step requirements, document attestation, and booking support.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {navigationHubs.map((hub) => (
+        <a
+          href={hub.href}
+          class="group relative bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+        >
+          {/* Square Aspect Visual Graphic with Floating Badge */}
+          <div class="relative w-full aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
+            <img
+              src={hub.image}
+              alt={hub.alt}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              width="500"
+              height="500"
+            />
+            {/* Top Floating Badge */}
+            <div class="absolute top-4 left-4">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/95 dark:bg-dark-950/90 text-slate-900 dark:text-white backdrop-blur-md shadow-sm border border-slate-200/60 dark:border-slate-700/60">
+                {hub.badge}
+              </span>
+            </div>
+          </div>
+
+          {/* Card Description & Tag Section */}
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold font-heading text-slate-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                {hub.title}
+              </h3>
+              <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                {hub.description}
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-100 dark:border-slate-800 mb-4">
+                {hub.tags.map((tag) => (
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-between text-xs font-bold text-primary-600 dark:text-primary-400">
+                <span>Access Complete Details</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {/* ═══════════════════════════════════════════════════════════
+       CORPORATE STATS MATRIX
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="border-y border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-dark-950 not-prose">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-primary-600 dark:text-blue-400 mb-1.5">
+            0304985
+          </div>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">SECP CUIN</p>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-primary-600 dark:text-blue-400 mb-1.5">
+            100%
+          </div>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Honest Advice</p>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-primary-600 dark:text-blue-400 mb-1.5">
+            5,000+
+          </div>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Files Evaluated</p>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-primary-600 dark:text-blue-400 mb-1.5">
+            24 Hours
+          </div>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Fast Response</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ═══════════════════════════════════════════════════════════
+       4-STEP WORKFLOW & SECP CREDIBILITY
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="section-container not-prose">
+    <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-blue-400 mb-2">
+          Structured Methodology
+        </p>
+        <h2 class="text-3xl md:text-4xl font-bold font-heading tracking-tight mb-4 text-slate-900 dark:text-white">
+          Our 4-Step File Preparation Process
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-base mb-8 leading-relaxed">
+          We eliminate guesswork and follow an official, transparent step-by-step roadmap for every client file.
+        </p>
+
+        <div class="space-y-6">
+          {[
+            { step: '1', title: 'Free Profile Assessment', desc: 'We evaluate your academic transcripts, IELTS/German certificate, and finances to determine realistic visa probabilities before you pay any fees.' },
+            { step: '2', title: 'Embassy Document Compilation', desc: 'We compile a verified checklist matching official embassy directives — statement of purpose, blocked accounts, and MOFA attestations.' },
+            { step: '3', title: 'Submission & 1-on-1 Interview Prep', desc: 'Appointment booking at VFS Global, Gerry’s, or Embassy portals, followed by thorough mock interview coaching.' },
+            { step: '4', title: 'Pre-Departure Clearance', desc: 'Visa stamping verification, BEOE protector clearance, and pre-departure arrival guidance.' },
+          ].map((item) => (
+            <div class="flex">
+              <div class="flex flex-col items-center mr-4">
+                <div class="flex items-center justify-center w-9 h-9 rounded-full font-bold text-sm bg-primary-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300 border-2 border-primary-600">
+                  {item.step}
+                </div>
+                <div class="w-px h-full bg-slate-200 dark:bg-slate-700 mt-2"></div>
+              </div>
+              <div class="pt-1 pb-4">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white font-heading mb-1">{item.title}</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Comparison & Trust Verification Card */}
+      <div class="bg-slate-50 dark:bg-slate-900 p-7 md:p-8 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-primary-700 dark:bg-slate-800 dark:text-blue-300 mb-3">
+          Institutional Security
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-slate-900 dark:text-white font-heading">
+          The SK Immigration Standard
+        </h3>
+        <ul class="space-y-4 text-xs md:text-sm text-slate-700 dark:text-slate-300">
+          <li class="flex items-start gap-3">
+            <span class="text-emerald-600 font-bold text-base">✓</span>
+            <div>
+              <strong>Official SECP Incorporation:</strong> Registered under Pakistani corporate law as SK Immigration Services (SMC-Private) Limited, CUIN 0304985.
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-emerald-600 font-bold text-base">✓</span>
+            <div>
+              <strong>100% Honest Policy:</strong> We openly explain that embassies hold exclusive visa authority — we never sell fake guarantees.
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-emerald-600 font-bold text-base">✓</span>
+            <div>
+              <strong>Transparent Written Pricing:</strong> Saudi work visa at PKR 15,000 fixed fee. No hidden processing expenses.
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-emerald-600 font-bold text-base">✓</span>
+            <div>
+              <strong>Physical Walk-In Office:</strong> Office No. 10, Alfazal Plaza 64C, Satellite Town, Rawalpindi.
+            </div>
+          </li>
+        </ul>
+
+        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex justify-center">
+          <a href="https://leap.secp.gov.pk" target="_blank" rel="noopener noreferrer" class="btn-tertiary text-xs py-2 px-5">
+            Verify on SECP LEAP — Search "SK Immigration Services" ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* In-Page Ad Slot */}
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <AdSlot slotId="1122334455" format="horizontal" />
+  </div>
+
+  {/* ═══════════════════════════════════════════════════════════
+       FAQS SECTION
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="bg-slate-50 dark:bg-dark-950 border-t border-slate-200 dark:border-slate-800 not-prose">
+    <div class="section-container">
+      <div class="md:mx-auto text-center max-w-3xl mb-12">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-blue-400 mb-2">
+          Frequently Asked Questions
+        </p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 font-heading text-slate-900 dark:text-white">
+          Clear Answers to Common Questions
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        {[
+          {
+            q: 'Who is SK Consultant / SK Immigration Services?',
+            a: 'SK Immigration Services (also searched as SK Consultant) is the public brand of SK Immigration Services (SMC-Private) Limited, CUIN 0304985, based in Satellite Town, Rawalpindi.',
+          },
+          {
+            q: 'What is the official SK Immigration phone number?',
+            a: 'The only official phone and WhatsApp number is +92 304 5999859. Verify any listing against this number before making payments.',
+          },
+          {
+            q: 'Does SK Immigration guarantee visa approval?',
+            a: 'No. SK Immigration Services does not sell visa guarantees. Embassies and consulates make every final visa decision. We provide file preparation and honest guidance.',
+          },
+          {
+            q: 'What is the cost for Saudi work visa processing?',
+            a: 'SK Immigration charges a fixed consultancy fee of PKR 15,000 for complete Saudi work visa processing (medical, Enjaz, Musaned, and protector formalities).',
+          },
+          {
+            q: 'Do you offer free profile assessments?',
+            a: 'Yes. Your initial consultation and eligibility assessment are completely free with zero obligation.',
+          },
+          {
+            q: 'How can I verify your SECP registration?',
+            a: 'Go to leap.secp.gov.pk, click "Verify Company Information", and search for "SK Immigration Services". Our company SK Immigration Services (SMC-Private) Limited will appear with CUIN 0304985.',
+          },
+        ].map((faq) => (
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white font-heading mb-2">
+              {faq.q}
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed">
+              {faq.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ═══════════════════════════════════════════════════════════
+       FINAL CALL TO ACTION BANNER
+       ═══════════════════════════════════════════════════════════ */}
+  <section class="section-container not-prose">
+    <div class="max-w-6xl mx-auto bg-gradient-to-r from-primary-900 via-primary-800 to-dark-900 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+          Ready to Discuss Your Visa File?
+        </h2>
+        <p class="text-slate-300 text-sm md:text-base mb-8 leading-relaxed">
+          Book a free consultation and let our team review your academic, financial, and visa profile with complete honesty.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="/contact/" class="btn-primary bg-white text-primary-900 hover:bg-slate-100 shadow-none font-bold">
+            Book Free Consultation
+          </a>
+          <a
+            href={CONTACT.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-whatsapp"
+          >
+            WhatsApp {CONTACT.phoneFormatted}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

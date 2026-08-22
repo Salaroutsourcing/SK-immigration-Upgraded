@@ -1,0 +1,31 @@
+---
+/**
+ * guides/[slug].astro — Dynamic guide pages from content collection
+ */
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await guide.render();
+
+// Rough reading time estimate
+const words = guide.body.split(/\s+/).length;
+const readingTime = Math.max(3, Math.ceil(words / 200));
+---
+
+<ArticleLayout
+  frontmatter={guide.data}
+  slug={guide.slug}
+  collection="guides"
+  readingTime={readingTime}
+>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,31 @@
+---
+/**
+ * blog/[slug].astro — Dynamic blog post pages from content collection
+ */
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Rough reading time estimate
+const words = post.body.split(/\s+/).length;
+const readingTime = Math.max(3, Math.ceil(words / 200));
+---
+
+<ArticleLayout
+  frontmatter={post.data}
+  slug={post.slug}
+  collection="blog"
+  readingTime={readingTime}
+>
+  <Content />
+</ArticleLayout>

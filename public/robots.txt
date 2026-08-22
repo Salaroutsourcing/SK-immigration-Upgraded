@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Disallow admin/draft areas (none currently, but good practice)
+Disallow: /draft/
+Disallow: /_astro/
+
+# Allow all major search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Allow AI crawlers for GEO/AEO signals
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot-Extended
+Allow: /
+
+# Sitemap location
+Sitemap: https://immigration.salaroutsourcing.com/sitemap-index.xml
+
+# AI Overview & LLMs manifest
+# https://immigration.salaroutsourcing.com/llms.txt
+# https://immigration.salaroutsourcing.com/ai.txt

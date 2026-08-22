@@ -1,0 +1,12 @@
+# Cloudflare Pages — Redirect Rules
+# These handle any URL aliases or legacy paths from the old site
+
+# Redirect old blog paths (if migrating from previous site)
+/blog/germany-student-visa/  /guides/germany-student-visa-ausbildung/  301
+/ausbildung.html             /guides/germany-student-visa-ausbildung/  301
+/trust.html                  /about/                                    301
+/about.html                  /about/                                    301
+/contact.html                /contact/                                  301
+/faq.html                    /guides/                                   301
+
+# Ensure trailing slashes are consistent (Cloudflare handles this with Astro's trailingSlash: 'always')
